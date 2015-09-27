@@ -46,12 +46,14 @@
                             <constraint firstItem="Atj-F2-T7Q" firstAttribute="centerY" secondItem="TST-Bi-wH8" secondAttribute="centerY" id="h3m-6C-fub"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ABs-jc-Spg" secondAttribute="bottom" id="piY-uO-6sd"/>
                             <constraint firstItem="TST-Bi-wH8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rCp-lU-dWU"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ABs-jc-Spg" secondAttribute="bottom" id="ry3-49-KaC"/>
                             <constraint firstItem="ABs-jc-Spg" firstAttribute="top" secondItem="TST-Bi-wH8" secondAttribute="bottom" id="wPM-ci-9Q7"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="wPM-ci-9Q7"/>
                                 <exclude reference="piY-uO-6sd"/>
+                                <exclude reference="ry3-49-KaC"/>
                             </mask>
                         </variation>
                     </view>

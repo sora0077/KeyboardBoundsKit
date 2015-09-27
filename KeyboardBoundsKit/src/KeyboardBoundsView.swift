@@ -30,7 +30,8 @@ public final class KeyboardBoundsView: UIView {
     - returns: `superview?.bounds.size`
     */
     public override func intrinsicContentSize() -> CGSize {
-        return superview?.bounds.size ?? super.intrinsicContentSize()
+        let size = superview?.bounds.size ?? super.intrinsicContentSize()
+        return size
     }
     
     /**
@@ -52,6 +53,7 @@ public final class KeyboardBoundsView: UIView {
             
             NSLayoutConstraint.activateConstraints([constraint])
             startObserving()
+            backgroundColor = UIColor.clearColor()
         } else {
             keyboardView?.removeObserver(self, forKeyPath: "center")
             if let constraint = heightConstraint {
@@ -60,15 +62,6 @@ public final class KeyboardBoundsView: UIView {
             stopObserving()
             heightConstraint = nil
         }
-    }
-    
-    /**
-    prepareForInterfaceBuilder
-    */
-    public override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        
-        backgroundColor = UIColor.clearColor()
     }
     
     /**
@@ -100,6 +93,40 @@ public final class KeyboardBoundsView: UIView {
         heightConstraint?.constant = -(height - keyboardView.frame.origin.y)
         
         superview?.layoutIfNeeded()
+    }
+    
+    /**
+    drawRect
+    
+    - parameter rect: rect
+    */
+    public override func drawRect(rect: CGRect) {
+        #if TARGET_INTERFACE_BUILDER
+        
+            CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(),
+                UIColor(red:0.941, green:0.941, blue:0.941, alpha: 1).CGColor)
+            CGContextFillRect(UIGraphicsGetCurrentContext(), rect)
+            
+            let className = "Keyboard Bounds View"
+            let attr = [
+                NSForegroundColorAttributeName : UIColor(red:0.796, green:0.796, blue:0.796, alpha: 1),
+                NSFontAttributeName : UIFont(name: "Helvetica-Bold", size: 28)!
+            ]
+            let size = className.boundingRectWithSize(rect.size, options: [], attributes: attr, context: nil)
+            className.drawAtPoint(CGPointMake(rect.width/2 - size.width/2, rect.height/2 - size.height/2), withAttributes: attr)
+            
+            if rect.height > 78.0 {
+                let subTitle:NSString = "Prototype Content"
+                let subAttr = [
+                    NSForegroundColorAttributeName : UIColor(red:0.796, green:0.796, blue:0.796, alpha: 1),
+                    NSFontAttributeName : UIFont(name: "Helvetica-Bold", size: 17)!
+                ]
+                let subTitleSize = subTitle.boundingRectWithSize(rect.size, options: [], attributes: subAttr, context: nil)
+                subTitle.drawAtPoint(CGPointMake(rect.width/2 - subTitleSize.width/2, rect.height/2 - subTitleSize.height/2 + 30), withAttributes: subAttr)
+            }
+        #else
+            super.drawRect(rect)
+        #endif
     }
 }
 
