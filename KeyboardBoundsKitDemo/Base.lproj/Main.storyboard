@@ -153,10 +153,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AHI-BE-CKX" customClass="KeyboardBoundsView" customModule="KeyboardBoundsKit">
-                                <frame key="frameInset" width="600" height="600"/>
+                                <frame key="frameInset" width="375" height="600"/>
                                 <subviews>
                                     <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="d7o-Y1-Ge9">
-                                        <frame key="frameInset" width="600" height="600"/>
+                                        <frame key="frameInset" width="375" height="600"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Jt-fa-Y0D">
                                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

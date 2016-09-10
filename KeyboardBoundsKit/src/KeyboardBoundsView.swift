@@ -30,15 +30,13 @@ public final class KeyboardBoundsView: UIView {
     - returns: `superview?.bounds.size`
     */
     public override var intrinsicContentSize: CGSize {
-        let size = superview?.bounds.size ?? super.intrinsicContentSize
-        return size
+        return superview?.bounds.size ?? super.intrinsicContentSize
     }
     
     /**
     didMoveToSuperview
     */
     public override func didMoveToSuperview() {
-        
         if let newSuperview = superview {
             let constraint = NSLayoutConstraint(
                 item: self,
@@ -50,7 +48,6 @@ public final class KeyboardBoundsView: UIView {
                 constant: 0
             )
             heightConstraint = constraint
-            
             NSLayoutConstraint.activate([constraint])
             startObserving()
             backgroundColor = UIColor.clear
@@ -75,29 +72,13 @@ public final class KeyboardBoundsView: UIView {
     */
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        
-        if changeFrameAnimation {
-            return
-        }
-        
-        guard let keyboardView = keyboardView else {
-            return
-        }
-        
-        
-        let height = superview!.bounds.height
-        print(height, keyboardView.frame, UIScreen.main.bounds.height - keyboardView.frame.origin.y - keyboardView.frame.height)
+        guard changeFrameAnimation else { return }
+        guard let keyboardView = keyboardView else { return }
+        guard let height = superview?.bounds.height else { return }
         
         let dockDistance = UIScreen.main.bounds.height - keyboardView.frame.origin.y - keyboardView.frame.height
         
-        if dockDistance > 0 {
-            
-            heightConstraint?.constant = 0
-        } else {
-            
-            heightConstraint?.constant = -(height - keyboardView.frame.origin.y)
-        }
-        
+        heightConstraint?.constant = dockDistance > 0 ? 0 : keyboardView.frame.origin.y - height
         
         superview?.layoutIfNeeded()
     }
@@ -109,7 +90,6 @@ public final class KeyboardBoundsView: UIView {
     */
     public override func draw(_ rect: CGRect) {
         #if TARGET_INTERFACE_BUILDER
-        
             CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(),
                 UIColor(red:0.941, green:0.941, blue:0.941, alpha: 1).CGColor)
             CGContextFillRect(UIGraphicsGetCurrentContext(), rect)
@@ -142,14 +122,13 @@ private extension KeyboardBoundsView {
     func startObserving() {
         
         let notifications = [
-            (NSNotification.Name.UIKeyboardDidHide, "keyboardDidHideNotification:"),
-            (NSNotification.Name.UIKeyboardDidShow, "keyboardDidShowNotification:"),
-            (NSNotification.Name.UIKeyboardWillChangeFrame, "keyboardWillChangeFrameNotification:"),
+            (NSNotification.Name.UIKeyboardDidHide, #selector(self.keyboardDidHideNotification(_:))),
+            (NSNotification.Name.UIKeyboardDidShow, #selector(self.keyboardDidShowNotification(_:))),
+            (NSNotification.Name.UIKeyboardWillChangeFrame, #selector(self.keyboardWillChangeFrameNotification(_:))),
         ]
         
-        let center = NotificationCenter.default
         notifications.forEach { name, sel in
-            center.addObserver(self, selector: Selector(sel), name: name, object: nil)
+            NotificationCenter.default.addObserver(self, selector: sel, name: name, object: nil)
         }
     }
     
@@ -164,7 +143,6 @@ private extension KeyboardBoundsView {
     
     @objc
     func keyboardDidHideNotification(_ notification: Notification) {
-        
         keyboardAppearing = false
     }
     
@@ -176,7 +154,6 @@ private extension KeyboardBoundsView {
         func getKeyboardView() -> UIView? {
             
             func getUIInputSetHostView(_ view: UIView) -> UIView? {
-                
                 if let clazz = NSClassFromString("UIInputSetHostView") {
                     if view.isMember(of: clazz) {
                         return view
@@ -191,8 +168,7 @@ private extension KeyboardBoundsView {
                 return nil
             }
             
-            let windows = UIApplication.shared.windows
-            for window in windows {
+            for window in UIApplication.shared.windows {
                 if let clazz = NSClassFromString("UITextEffectsWindow") {
                     if window.isKind(of: clazz) {
                         return getUIInputSetHostView(window)
@@ -208,10 +184,7 @@ private extension KeyboardBoundsView {
     @objc
     func keyboardWillChangeFrameNotification(_ notification: Notification) {
         
-        guard let userInfo = notification.userInfo else {
-            return
-        }
-        
+        guard let userInfo = notification.userInfo else { return }
         guard
             let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? Int,
             let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Float,
@@ -226,9 +199,9 @@ private extension KeyboardBoundsView {
         let height = superview!.bounds.height
         
         if endFrame.size == CGSize.zero {
-            heightConstraint?.constant = -(height - beginFrame.origin.y)
+            heightConstraint?.constant = beginFrame.origin.y - height
         } else {
-            heightConstraint?.constant = -(height - endFrame.origin.y)
+            heightConstraint?.constant = endFrame.origin.y - height
         }
         
         
