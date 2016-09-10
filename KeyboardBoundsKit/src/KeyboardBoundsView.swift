@@ -13,24 +13,24 @@ import UIKit
 public final class KeyboardBoundsView: UIView {
     
     /// if keyboard did appear then `true`
-    public private(set) var keyboardAppearing: Bool = false
+    public fileprivate(set) var keyboardAppearing: Bool = false
     
-    private var heightConstraint: NSLayoutConstraint?
-    private var keyboardView: UIView? {
+    fileprivate var heightConstraint: NSLayoutConstraint?
+    fileprivate var keyboardView: UIView? {
         willSet {
             keyboardView?.removeObserver(self, forKeyPath: "center")
-            newValue?.addObserver(self, forKeyPath: "center", options: .New, context: nil)
+            newValue?.addObserver(self, forKeyPath: "center", options: .new, context: nil)
         }
     }
-    private var changeFrameAnimation: Bool = false
+    fileprivate var changeFrameAnimation: Bool = false
  
     /**
     intrinsicContentSize
     
     - returns: `superview?.bounds.size`
     */
-    public override func intrinsicContentSize() -> CGSize {
-        let size = superview?.bounds.size ?? super.intrinsicContentSize()
+    public override var intrinsicContentSize: CGSize {
+        let size = superview?.bounds.size ?? super.intrinsicContentSize
         return size
     }
     
@@ -42,27 +42,28 @@ public final class KeyboardBoundsView: UIView {
         if let newSuperview = superview {
             let constraint = NSLayoutConstraint(
                 item: self,
-                attribute: .Bottom,
-                relatedBy: .Equal,
+                attribute: .bottom,
+                relatedBy: .equal,
                 toItem: newSuperview,
-                attribute: .Bottom,
+                attribute: .bottom,
                 multiplier: 1,
                 constant: 0
             )
             heightConstraint = constraint
             
-            NSLayoutConstraint.activateConstraints([constraint])
+            NSLayoutConstraint.activate([constraint])
             startObserving()
-            backgroundColor = UIColor.clearColor()
+            backgroundColor = UIColor.clear
         } else {
             keyboardView?.removeObserver(self, forKeyPath: "center")
             if let constraint = heightConstraint {
-                NSLayoutConstraint.deactivateConstraints([constraint])
+                NSLayoutConstraint.deactivate([constraint])
             }
             stopObserving()
             heightConstraint = nil
         }
     }
+    
     
     /**
     observeValueForKeyPath:ofObject:change:context
@@ -72,12 +73,8 @@ public final class KeyboardBoundsView: UIView {
     - parameter change:  change
     - parameter context: context
     */
-    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        
-        if !keyboardAppearing {
-            return
-        }
         
         if changeFrameAnimation {
             return
@@ -87,10 +84,20 @@ public final class KeyboardBoundsView: UIView {
             return
         }
         
+        
         let height = superview!.bounds.height
+        print(height, keyboardView.frame, UIScreen.main.bounds.height - keyboardView.frame.origin.y - keyboardView.frame.height)
         
+        let dockDistance = UIScreen.main.bounds.height - keyboardView.frame.origin.y - keyboardView.frame.height
         
-        heightConstraint?.constant = -(height - keyboardView.frame.origin.y)
+        if dockDistance > 0 {
+            
+            heightConstraint?.constant = 0
+        } else {
+            
+            heightConstraint?.constant = -(height - keyboardView.frame.origin.y)
+        }
+        
         
         superview?.layoutIfNeeded()
     }
@@ -100,7 +107,7 @@ public final class KeyboardBoundsView: UIView {
     
     - parameter rect: rect
     */
-    public override func drawRect(rect: CGRect) {
+    public override func draw(_ rect: CGRect) {
         #if TARGET_INTERFACE_BUILDER
         
             CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(),
@@ -125,7 +132,7 @@ public final class KeyboardBoundsView: UIView {
                 subTitle.drawAtPoint(CGPointMake(rect.width/2 - subTitleSize.width/2, rect.height/2 - subTitleSize.height/2 + 30), withAttributes: subAttr)
             }
         #else
-            super.drawRect(rect)
+            super.draw(rect)
         #endif
     }
 }
@@ -135,19 +142,19 @@ private extension KeyboardBoundsView {
     func startObserving() {
         
         let notifications = [
-            (UIKeyboardDidHideNotification, "keyboardDidHideNotification:"),
-            (UIKeyboardDidShowNotification, "keyboardDidShowNotification:"),
-            (UIKeyboardWillChangeFrameNotification, "keyboardWillChangeFrameNotification:"),
+            (NSNotification.Name.UIKeyboardDidHide, "keyboardDidHideNotification:"),
+            (NSNotification.Name.UIKeyboardDidShow, "keyboardDidShowNotification:"),
+            (NSNotification.Name.UIKeyboardWillChangeFrame, "keyboardWillChangeFrameNotification:"),
         ]
         
-        let center = NSNotificationCenter.defaultCenter()
+        let center = NotificationCenter.default
         notifications.forEach { name, sel in
             center.addObserver(self, selector: Selector(sel), name: name, object: nil)
         }
     }
     
     func stopObserving() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
 }
@@ -156,22 +163,22 @@ private extension KeyboardBoundsView {
 private extension KeyboardBoundsView {
     
     @objc
-    func keyboardDidHideNotification(notification: NSNotification) {
+    func keyboardDidHideNotification(_ notification: Notification) {
         
         keyboardAppearing = false
     }
     
     @objc
-    func keyboardDidShowNotification(notification: NSNotification) {
+    func keyboardDidShowNotification(_ notification: Notification) {
         
         keyboardAppearing = true
         
         func getKeyboardView() -> UIView? {
             
-            func getUIInputSetHostView(view: UIView) -> UIView? {
+            func getUIInputSetHostView(_ view: UIView) -> UIView? {
                 
                 if let clazz = NSClassFromString("UIInputSetHostView") {
-                    if view.isMemberOfClass(clazz) {
+                    if view.isMember(of: clazz) {
                         return view
                     }
                 }
@@ -184,10 +191,10 @@ private extension KeyboardBoundsView {
                 return nil
             }
             
-            let windows = UIApplication.sharedApplication().windows
+            let windows = UIApplication.shared.windows
             for window in windows {
                 if let clazz = NSClassFromString("UITextEffectsWindow") {
-                    if window.isKindOfClass(clazz) {
+                    if window.isKind(of: clazz) {
                         return getUIInputSetHostView(window)
                     }
                 }
@@ -199,25 +206,35 @@ private extension KeyboardBoundsView {
     }
     
     @objc
-    func keyboardWillChangeFrameNotification(notification: NSNotification) {
+    func keyboardWillChangeFrameNotification(_ notification: Notification) {
         
         guard let userInfo = notification.userInfo else {
             return
         }
         
-        let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue!
-        let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey]!.floatValue!
-        
-        let endFrame = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue!
+        guard
+            let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? Int,
+            let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? Float,
+            let _beginFrame = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue,
+            let beginFrame = Optional(_beginFrame.cgRectValue),
+            let _endFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+            let endFrame = Optional(_endFrame.cgRectValue)
+        else {
+            return
+        }
         
         let height = superview!.bounds.height
         
+        if endFrame.size == CGSize.zero {
+            heightConstraint?.constant = -(height - beginFrame.origin.y)
+        } else {
+            heightConstraint?.constant = -(height - endFrame.origin.y)
+        }
         
-        heightConstraint?.constant = -(height - endFrame.origin.y)
         
         changeFrameAnimation = true
-        UIView.animateWithDuration(
-            NSTimeInterval(duration),
+        UIView.animate(
+            withDuration: TimeInterval(duration),
             delay: 0.0,
             options: UIViewAnimationOptions(rawValue: UInt(curve) << 16),
             animations: {

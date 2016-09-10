@@ -11,16 +11,16 @@ import KeyboardBoundsKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet private weak var resignButton: UIButton! {
+    @IBOutlet fileprivate weak var resignButton: UIButton! {
         willSet {
-            newValue.transform = CGAffineTransformMakeRotation(CGFloat(45 * M_PI / 180))
+            newValue.transform = CGAffineTransform(rotationAngle: CGFloat(45 * M_PI / 180))
         }
     }
     
     
     @IBOutlet weak var boundsView: KeyboardBoundsView! {
         willSet {
-            newValue.layer.borderColor = UIColor.redColor().CGColor
+            newValue.layer.borderColor = UIColor.red.cgColor
             newValue.layer.borderWidth = 4
         }
     }
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction private func resignButtonAction(sender: AnyObject) {
+    @IBAction fileprivate func resignButtonAction(_ sender: AnyObject) {
         self.view.endEditing(true)
     }
     

@@ -11,18 +11,18 @@ import KeyboardBoundsKit
 
 class ScrollViewController2: UIViewController {
     
-    @IBOutlet private weak var textField: UITextField!
+    @IBOutlet fileprivate weak var textField: UITextField!
     
-    @IBOutlet private weak var resignButton: UIButton! {
+    @IBOutlet fileprivate weak var resignButton: UIButton! {
         willSet {
-            newValue.transform = CGAffineTransformMakeRotation(CGFloat(45 * M_PI / 180))
+            newValue.transform = CGAffineTransform(rotationAngle: CGFloat(45 * M_PI / 180))
         }
     }
     
     
     @IBOutlet weak var boundsView: KeyboardBoundsView! {
         willSet {
-            newValue.layer.borderColor = UIColor.redColor().CGColor
+            newValue.layer.borderColor = UIColor.red.cgColor
             newValue.layer.borderWidth = 4
         }
     }
@@ -43,7 +43,7 @@ class ScrollViewController2: UIViewController {
     }
     
     
-    @IBAction private func resignButtonAction(sender: AnyObject) {
+    @IBAction fileprivate func resignButtonAction(_ sender: AnyObject) {
         self.view.endEditing(true)
     }
     
@@ -62,7 +62,7 @@ class ScrollViewController2: UIViewController {
 
 extension ScrollViewController2: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
 //        print(textField.inputAccessoryView?.superview?.frame)
     }

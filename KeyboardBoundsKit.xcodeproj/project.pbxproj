@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D9156A081BB42208007170E2 /* KeyboardBoundsKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D9156A071BB42208007170E2 /* KeyboardBoundsKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D9156A0F1BB42208007170E2 /* KeyboardBoundsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9156A041BB42208007170E2 /* KeyboardBoundsKit.framework */; settings = {ASSET_TAGS = (); }; };
+		D9156A0F1BB42208007170E2 /* KeyboardBoundsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9156A041BB42208007170E2 /* KeyboardBoundsKit.framework */; };
 		D9156A141BB42208007170E2 /* KeyboardBoundsKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A131BB42208007170E2 /* KeyboardBoundsKitTests.swift */; };
 		D9156A261BB42270007170E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A251BB42270007170E2 /* AppDelegate.swift */; };
 		D9156A281BB42270007170E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A271BB42270007170E2 /* ViewController.swift */; };
@@ -17,9 +17,9 @@
 		D9156A301BB42270007170E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9156A2E1BB42270007170E2 /* LaunchScreen.storyboard */; };
 		D9156A351BB42279007170E2 /* KeyboardBoundsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9156A041BB42208007170E2 /* KeyboardBoundsKit.framework */; };
 		D9156A361BB42279007170E2 /* KeyboardBoundsKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9156A041BB42208007170E2 /* KeyboardBoundsKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D9156A3B1BB423C8007170E2 /* KeyboardBoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A3A1BB423C8007170E2 /* KeyboardBoundsView.swift */; settings = {ASSET_TAGS = (); }; };
-		D9156A3E1BB44320007170E2 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A3D1BB44320007170E2 /* ScrollViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		D9156A401BB44800007170E2 /* ScrollViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A3F1BB44800007170E2 /* ScrollViewController2.swift */; settings = {ASSET_TAGS = (); }; };
+		D9156A3B1BB423C8007170E2 /* KeyboardBoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A3A1BB423C8007170E2 /* KeyboardBoundsView.swift */; };
+		D9156A3E1BB44320007170E2 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A3D1BB44320007170E2 /* ScrollViewController.swift */; };
+		D9156A401BB44800007170E2 /* ScrollViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9156A3F1BB44800007170E2 /* ScrollViewController2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -245,17 +245,19 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = jp.sora0077;
 				TargetAttributes = {
 					D9156A031BB42208007170E2 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 					D9156A0D1BB42208007170E2 = {
 						CreatedOnToolsVersion = 7.0;
 					};
 					D9156A221BB42270007170E2 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -382,8 +384,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -430,8 +434,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -451,6 +457,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -462,6 +469,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -474,6 +482,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -481,6 +490,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -492,6 +502,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jp.sora0077.KeyboardBoundsKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -518,26 +529,28 @@
 		D9156A331BB42270007170E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = KeyboardBoundsKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.sora0077.KeyboardBoundsKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		D9156A341BB42270007170E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = KeyboardBoundsKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.sora0077.KeyboardBoundsKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -560,6 +573,7 @@
 				D9156A1A1BB42208007170E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D9156A1B1BB42208007170E2 /* Build configuration list for PBXNativeTarget "KeyboardBoundsKitTests" */ = {
 			isa = XCConfigurationList;
@@ -568,6 +582,7 @@
 				D9156A1D1BB42208007170E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D9156A321BB42270007170E2 /* Build configuration list for PBXNativeTarget "KeyboardBoundsKitDemo" */ = {
 			isa = XCConfigurationList;
@@ -576,6 +591,7 @@
 				D9156A341BB42270007170E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
